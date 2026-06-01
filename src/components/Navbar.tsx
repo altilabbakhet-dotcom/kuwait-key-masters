@@ -14,12 +14,12 @@ const links = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
-  // دالة تسجيل التحويل لجوجل أدز
-  const handleConversion = (url: string) => {
-    if (typeof (window as any).gtag_report_conversion === 'function') {
-      (window as any).gtag_report_conversion(url);
-    } else {
-      window.location.href = url;
+  // دالة إرسال حدث التحويل مباشرة لجوجل أدز في الخلفية دون تعطيل المستخدم
+  const handleConversion = () => {
+    if (typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-18189189684/aRB1CObjt7YcELSEpOFD'
+      });
     }
   };
 
@@ -55,14 +55,11 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* زر الاتصال في الهيدر مع تتبع التحويل */}
+        {/* 🎯 زر الاتصال في الهيدر يرسل التتبع فوراً ويفتح الاتصال دون أي تأخير */}
         <a 
           href="tel:66610023" 
           className="hidden md:inline-flex btn-gold !px-4 !py-2 text-sm"
-          onClick={(e) => {
-            e.preventDefault();
-            handleConversion("tel:66610023");
-          }}
+          onClick={handleConversion}
         >
           <Phone className="h-4 w-4" />
           66610023
