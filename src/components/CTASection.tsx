@@ -1,12 +1,12 @@
 import { Phone, MessageCircle } from "lucide-react";
 
 const CTASection = () => {
-  // دالة تسجيل التحويل
-  const handleConversion = (url: string) => {
-    if (typeof (window as any).gtag_report_conversion === 'function') {
-      (window as any).gtag_report_conversion(url);
-    } else {
-      window.location.href = url;
+  // دالة إرسال حدث التحويل مباشرة لجوجل أدز في الخلفية دون تعطيل المستخدم
+  const handleConversion = () => {
+    if (typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-18189189684/aRB1CObjt7YcELSEpOFD'
+      });
     }
   };
 
@@ -22,29 +22,23 @@ const CTASection = () => {
             نصل إليك في أي مكان بالكويت خلال دقائق. خدمة 24 ساعة، أسعار مناسبة، وضمان على الخدمة.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            {/* زر الاتصال */}
+            {/* 🎯 زر الاتصال - يرسل التتبع فوراً ويطلب الرقم مباشرة */}
             <a 
               href="tel:66610023" 
               className="btn-gold"
-              onClick={(e) => {
-                e.preventDefault();
-                handleConversion("tel:66610023");
-              }}
+              onClick={handleConversion}
             >
               <Phone className="h-5 w-5" />
               اتصل: 66610023
             </a>
 
-            {/* زر الواتساب */}
+            {/* 🎯 زر الواتساب - يرسل التتبع ويفتح في صفحة جديدة بسلاسة */}
             <a
-              href="https://wa.me/96566610023"
+              href="https://wa.me/96566610023?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B4%D8%B1%D9%83%D8%A9%20%D8%A7%D9%84%D8%B1%D9%83%D9%86%20%D8%A7%D9%84%D8%AF%D9%88%D9%84%D9%8A%D8%8C%20%D8%A3%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AE%D8%AF%D9%85%D8%A9%20%D9%81%D9%86%D9%8A%20%D9%85%D9%81%D8%A7%D8%AA%D9%8A%D8%AD"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--whatsapp))] px-6 py-3 font-bold text-white shadow-lg transition-all hover:scale-105"
-              onClick={(e) => {
-                e.preventDefault();
-                handleConversion("https://wa.me/96566610023");
-              }}
+              onClick={handleConversion}
             >
               <MessageCircle className="h-5 w-5" />
               واتساب الآن
